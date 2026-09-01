@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+.env
+.env.local
+
+# Kullanıcı yüklemeleri repoya dahil edilmez
+public/uploads/*
+!public/uploads/.gitkeep
+data/photos.json
