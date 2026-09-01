@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: dugun-foto-yukleme
+    name: nagehan-cem-dugun
     runtime: node
     plan: starter
     region: frankfurt

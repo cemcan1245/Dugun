@@ -41,16 +41,30 @@ servisi ve kalıcı diski otomatik kurar.
 2. Dashboard'da **New +** → **Blueprint** seçin.
 3. `cemcan1245/Dugun` GitHub reposunu bağlayın (ilk seferinde Render'a GitHub
    erişim izni vermeniz gerekir).
-4. Render, repodaki `render.yaml` dosyasını okuyup `dugun-foto-yukleme`
+4. Render, repodaki `render.yaml` dosyasını okuyup `nagehan-cem-dugun`
    adında bir web servisi ve `dugun-storage` adında 1 GB'lık kalıcı bir disk
    önerecek. Planı gerekirse **Starter** olarak bırakın (disk için zorunlu).
 5. **Apply**'a basıp deploy'un bitmesini bekleyin (birkaç dakika sürer).
-6. Deploy bitince Render size `https://dugun-foto-yukleme-xxxx.onrender.com`
+6. Deploy bitince Render size `https://nagehan-cem-dugun.onrender.com`
    gibi bir adres verir. Kendi alan adınızı bağlamak isterseniz Render'ın
    **Custom Domain** ayarından ekleyebilirsiniz.
 7. (Opsiyonel) Servisin **Environment** sekmesinden `NEXT_PUBLIC_SITE_URL`
    değişkenine kendi alan adınızı girin — girmezseniz site istekten gelen
    domain'i otomatik algılar, bu genelde yeterlidir.
+
+### Zaten yayında olan bir servisin adresini değiştirme
+
+`render.yaml` dosyasındaki `name` alanını değiştirmek, Render'da **halihazırda
+oluşturulmuş bir servisi otomatik yeniden adlandırmaz** — Blueprint senkronu
+isme göre eşleştiği için farklı bir isim yeni bir servis oluşturulmasına
+neden olabilir. Adresi değiştirmek için Render dashboard'da:
+
+1. `dugun-foto-yukleme` servisine girin.
+2. **Settings** sekmesinde **Name** alanını `nagehan-cem-dugun` yapın ve kaydedin.
+3. Servisin adresi otomatik olarak `https://nagehan-cem-dugun.onrender.com`
+   olarak değişir (birkaç dakika içinde etkin olur).
+4. `/qr` sayfasını tekrar açıp yeni karekodu indirin — eski karekotlar
+   artık geçersiz olur.
 
 Deploy'dan sonra:
 
