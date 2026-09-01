@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Düğün Fotoğrafları",
+  title: "Nagehan&Cem-düğün",
   description: "Karekodu okutun, anılarınızı bizimle paylaşın.",
 };
 

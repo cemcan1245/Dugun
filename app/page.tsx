@@ -10,7 +10,7 @@ export default async function GalleryPage() {
     <main className="mx-auto max-w-5xl px-4 py-10">
       <header className="text-center mb-10">
         <p className="uppercase tracking-[0.3em] text-rose text-xs mb-2">Anılarımız</p>
-        <h1 className="text-4xl md:text-5xl mb-3">Düğün Fotoğrafları</h1>
+        <h1 className="text-4xl md:text-5xl mb-3">Nagehan&Cem-düğün</h1>
         <p className="text-ink/70">
           Karekodu okutan misafirlerimizin paylaştığı anlar burada.
         </p>
