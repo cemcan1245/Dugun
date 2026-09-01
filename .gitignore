@@ -4,7 +4,7 @@ out
 .env
 .env.local
 
-# Kullanıcı yüklemeleri repoya dahil edilmez
-public/uploads/*
-!public/uploads/.gitkeep
-data/photos.json
+# Kullanıcı yüklemeleri ve metadata repoya dahil edilmez
+storage/uploads/*
+!storage/uploads/.gitkeep
+storage/photos.json

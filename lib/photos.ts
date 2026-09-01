@@ -9,12 +9,15 @@ export type Photo = {
   createdAt: string;
 };
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const DATA_FILE = path.join(DATA_DIR, "photos.json");
-export const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
+// Render gibi platformlarda tek bir kalıcı disk tek bir dizine bağlanabildiği
+// için tüm veriler (fotoğraflar + metadata) tek bir "storage" dizini altında
+// tutulur. Bu dizin public/ altında OLMADIĞI için fotoğraflar doğrudan statik
+// olarak sunulamaz; app/api/uploads/[filename]/route.ts üzerinden servis edilir.
+const STORAGE_DIR = process.env.DATA_DIR || path.join(process.cwd(), "storage");
+const DATA_FILE = path.join(STORAGE_DIR, "photos.json");
+export const UPLOADS_DIR = path.join(STORAGE_DIR, "uploads");
 
 async function ensureStorage() {
-  await fs.mkdir(DATA_DIR, { recursive: true });
   await fs.mkdir(UPLOADS_DIR, { recursive: true });
   try {
     await fs.access(DATA_FILE);

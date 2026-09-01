@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: dugun-foto-yukleme
+    runtime: node
+    plan: starter
+    region: frankfurt
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.14.0
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
+    disk:
+      name: dugun-storage
+      mountPath: /opt/render/project/src/storage
+      sizeGB: 1

@@ -34,7 +34,7 @@ export default async function GalleryPage() {
               className="bg-white rounded-lg overflow-hidden shadow-sm border border-rose/10"
             >
               <img
-                src={`/uploads/${photo.filename}`}
+                src={`/api/uploads/${photo.filename}`}
                 alt={photo.message || photo.uploaderName}
                 className="w-full aspect-square object-cover"
                 loading="lazy"
