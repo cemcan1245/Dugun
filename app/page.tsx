@@ -3,6 +3,20 @@ import { getPhotos } from "@/lib/photos";
 
 export const dynamic = "force-dynamic";
 
+function formatDateTime(iso: string) {
+  const date = new Date(iso);
+  const datePart = date.toLocaleDateString("tr-TR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+  const timePart = date.toLocaleTimeString("tr-TR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return `${datePart} ${timePart}`;
+}
+
 export default async function GalleryPage() {
   const photos = await getPhotos();
 
@@ -18,7 +32,7 @@ export default async function GalleryPage() {
           href="/yukle"
           className="inline-block mt-6 bg-rose text-white px-6 py-3 rounded-full shadow hover:opacity-90 transition"
         >
-          Fotoğraf Yükle
+          Fotoğraf Paylaş
         </Link>
       </header>
 
@@ -39,8 +53,9 @@ export default async function GalleryPage() {
                 className="w-full aspect-square object-cover"
                 loading="lazy"
               />
-              <figcaption className="p-2 text-xs text-ink/70 truncate">
-                {photo.uploaderName}
+              <figcaption className="p-2 text-xs text-ink/70">
+                <p className="truncate">{photo.uploaderName}</p>
+                <p className="text-ink/50">{formatDateTime(photo.createdAt)}</p>
               </figcaption>
             </figure>
           ))}

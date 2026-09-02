@@ -9,16 +9,25 @@ export default function UploadPage() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
 
-  function handleFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setFiles(Array.from(e.target.files || []));
+  function handleFilesAdded(e: React.ChangeEvent<HTMLInputElement>) {
+    const newFiles = Array.from(e.target.files || []);
+    if (newFiles.length > 0) {
+      setFiles((prev) => [...prev, ...newFiles]);
+    }
+    e.target.value = "";
+  }
+
+  function removeFile(index: number) {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (files.length === 0) {
-      setErrorMsg("Lütfen en az bir fotoğraf seçin.");
+      setErrorMsg("Lütfen en az bir fotoğraf ekleyin.");
       return;
     }
     setStatus("sending");
@@ -36,7 +45,6 @@ export default function UploadPage() {
       setStatus("done");
       setFiles([]);
       setMessage("");
-      if (inputRef.current) inputRef.current.value = "";
     } catch (err) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Bir hata oluştu.");
@@ -53,7 +61,7 @@ export default function UploadPage() {
             onClick={() => setStatus("idle")}
             className="bg-rose text-white px-6 py-3 rounded-full"
           >
-            Başka Fotoğraf Yükle
+            Başka Fotoğraf Paylaş
           </button>
           <Link href="/" className="text-rose underline">
             Galeriyi Gör
@@ -96,18 +104,65 @@ export default function UploadPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1 text-ink/70">Fotoğraflar</label>
+          <label className="block text-sm mb-2 text-ink/70">Fotoğraflar</label>
+
+          {/* Kamerayı doğrudan açan gizli input */}
           <input
-            ref={inputRef}
+            ref={cameraInputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={handleFilesAdded}
+            className="hidden"
+          />
+          {/* Galeriden çoklu seçim yapan gizli input (capture yok) */}
+          <input
+            ref={galleryInputRef}
             type="file"
             accept="image/*"
             multiple
-            capture="environment"
-            onChange={handleFilesChange}
-            className="w-full rounded-lg border border-rose/30 px-4 py-3 bg-white"
+            onChange={handleFilesAdded}
+            className="hidden"
           />
+
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => cameraInputRef.current?.click()}
+              className="flex flex-col items-center justify-center gap-1 rounded-lg border border-rose/30 bg-white px-4 py-4 hover:bg-rose/5 transition"
+            >
+              <span className="text-2xl">📷</span>
+              <span className="text-sm">Fotoğraf Çek</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => galleryInputRef.current?.click()}
+              className="flex flex-col items-center justify-center gap-1 rounded-lg border border-rose/30 bg-white px-4 py-4 hover:bg-rose/5 transition"
+            >
+              <span className="text-2xl">🖼️</span>
+              <span className="text-sm">Fotoğraf Yükle</span>
+            </button>
+          </div>
+
           {files.length > 0 && (
-            <p className="text-xs text-ink/60 mt-1">{files.length} dosya seçildi</p>
+            <ul className="mt-3 space-y-1">
+              {files.map((file, i) => (
+                <li
+                  key={`${file.name}-${file.lastModified}-${i}`}
+                  className="flex items-center justify-between text-xs text-ink/70 bg-white rounded px-3 py-2 border border-rose/10"
+                >
+                  <span className="truncate">{file.name}</span>
+                  <button
+                    type="button"
+                    onClick={() => removeFile(i)}
+                    className="text-rose ml-2 shrink-0"
+                    aria-label="Kaldır"
+                  >
+                    Kaldır
+                  </button>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
 
