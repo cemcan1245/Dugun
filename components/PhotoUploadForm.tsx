@@ -12,7 +12,6 @@ export default function PhotoUploadForm({ onSuccess }: Props) {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
   function handleFilesAdded(e: React.ChangeEvent<HTMLInputElement>) {
@@ -85,16 +84,7 @@ export default function PhotoUploadForm({ onSuccess }: Props) {
       <div>
         <label className="block text-sm mb-2 text-ink/70">Fotoğraflar</label>
 
-        {/* Kamerayı doğrudan açan gizli input */}
-        <input
-          ref={cameraInputRef}
-          type="file"
-          accept="image/*"
-          capture="environment"
-          onChange={handleFilesAdded}
-          className="hidden"
-        />
-        {/* Galeriden çoklu seçim yapan gizli input (capture yok) */}
+        {/* Galeriden çoklu seçim yapan gizli input */}
         <input
           ref={galleryInputRef}
           type="file"
@@ -104,24 +94,14 @@ export default function PhotoUploadForm({ onSuccess }: Props) {
           className="hidden"
         />
 
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            onClick={() => cameraInputRef.current?.click()}
-            className="flex flex-col items-center justify-center gap-1 rounded-lg border border-rose/30 bg-white px-4 py-4 hover:bg-rose/5 transition"
-          >
-            <span className="text-2xl">📷</span>
-            <span className="text-sm">Fotoğraf Çek</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => galleryInputRef.current?.click()}
-            className="flex flex-col items-center justify-center gap-1 rounded-lg border border-rose/30 bg-white px-4 py-4 hover:bg-rose/5 transition"
-          >
-            <span className="text-2xl">🖼️</span>
-            <span className="text-sm">Fotoğraf Yükle</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => galleryInputRef.current?.click()}
+          className="w-full flex flex-col items-center justify-center gap-1 rounded-lg border border-rose/30 bg-white px-4 py-4 hover:bg-rose/5 transition"
+        >
+          <span className="text-2xl">🖼️</span>
+          <span className="text-sm">Fotoğraf Yükle</span>
+        </button>
 
         {files.length > 0 && (
           <ul className="mt-3 space-y-1">
