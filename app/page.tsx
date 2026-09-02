@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { getPhotos } from "@/lib/photos";
+import HomeUploadWidget from "@/components/HomeUploadWidget";
 
 export const dynamic = "force-dynamic";
 
@@ -28,13 +28,11 @@ export default async function GalleryPage() {
         <p className="text-ink/70">
           Karekodu okutan misafirlerimizin paylaştığı anlar burada.
         </p>
-        <Link
-          href="/yukle"
-          className="inline-block mt-6 bg-rose text-white px-6 py-3 rounded-full shadow hover:opacity-90 transition"
-        >
-          Fotoğraf Paylaş
-        </Link>
       </header>
+
+      <div className="max-w-md mx-auto mb-12 bg-white/70 rounded-2xl p-5 shadow-sm border border-rose/10">
+        <HomeUploadWidget />
+      </div>
 
       {photos.length === 0 ? (
         <p className="text-center text-ink/60">
